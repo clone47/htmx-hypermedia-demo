@@ -7,8 +7,8 @@ A minimal example of a Hypermedia-Driven Application using [HTMX](https://htmx.o
 Install Flask:
 ```bash
 pip install flask
-
+```
 Run the app:
 ```bash
 python server.py
-
+```
