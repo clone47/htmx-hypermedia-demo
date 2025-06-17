@@ -1,17 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <script src="https://unpkg.com/htmx.org@1.9.2"></script>
-  <title>Advanced HTMX Task App</title>
+  <title>HTMX Task App</title>
 </head>
 <body>
   <h2>Tasks</h2>
-
-  <div id="task-list" hx-get="/tasks" hx-trigger="load"></div>
-
-  <form hx-post="/tasks" hx-target="#task-list" hx-swap="outerHTML">
-    <input name="title" placeholder="New Task" required />
-    <button type="submit">Add</button>
-  </form>
+  <div id="task-section" hx-get="/tasks" hx-trigger="load"></div>
 </body>
 </html>
