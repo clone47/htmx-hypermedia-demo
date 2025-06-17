@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from uuid import uuid4
 
 app = Flask(__name__)
 tasks = []
@@ -15,7 +16,27 @@ def get_tasks():
 def add_task():
     title = request.form.get('title')
     if title:
-        tasks.append(title)
+        tasks.append({'id': str(uuid4()), 'title': title})
+    return render_template('tasks.html', tasks=tasks)
+
+@app.route('/tasks/<task_id>/edit', methods=['GET'])
+def edit_task_form(task_id):
+    task = next((t for t in tasks if t['id'] == task_id), None)
+    return render_template('edit_task.html', task=task)
+
+@app.route('/tasks/<task_id>', methods=['POST'])
+def update_task(task_id):
+    title = request.form.get('title')
+    for task in tasks:
+        if task['id'] == task_id:
+            task['title'] = title
+            break
+    return render_template('tasks.html', tasks=tasks)
+
+@app.route('/tasks/<task_id>/delete', methods=['POST'])
+def delete_task(task_id):
+    global tasks
+    tasks = [t for t in tasks if t['id'] != task_id]
     return render_template('tasks.html', tasks=tasks)
 
 if __name__ == '__main__':
