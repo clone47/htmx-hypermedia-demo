@@ -39,5 +39,18 @@ def delete_task(task_id):
     tasks = [t for t in tasks if t['id'] != task_id]
     return render_template('tasks.html', tasks=tasks)
 
+@app.route('/tasks.xml')
+def mobile_tasks():
+    return '''
+    <screen title="Tasks">
+      <view style="padding: 20">
+        <text style="font-size: 24">Tasks</text>
+        <view>
+          %s
+        </view>
+      </view>
+    </screen>
+    ''' % ''.join(f'<text>{t["title"]}</text>' for t in tasks), 200, {'Content-Type': 'application/xml'}
+
 if __name__ == '__main__':
     app.run(debug=True)
